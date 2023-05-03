@@ -1,32 +1,37 @@
-import {createElement} from "./utils.js";
+import {createElement} from './utils.js';
+import React from 'https://cdn.skypack.dev/react';
 
+/**
+ * Приложение
+ * @param store {Store} Хранилище состояния приложения
+ * @returns {React.ReactElement}
+ */
 function App({store}) {
 
   const list = store.getState().list;
 
   return (
-    createElement('div', {className: 'App'},
-      createElement('div', {className: 'App-head'},
-        createElement('h1', {textContent: 'Приложение на чистом JS'})
+    React.createElement('div', {className: 'App'},
+      React.createElement('div', {className: 'App-head'},
+        React.createElement('h1', {}, 'Приложение на чистом JS')
       ),
-      createElement('div', {className: 'App-controls'},
-        createElement('button', {textContent: 'Добавить', onclick: () => store.addItem()}),
+      React.createElement('div', {className: 'App-controls'},
+        React.createElement('button', {onClick: () => store.addItem()}, 'Добавить'),
       ),
-      createElement('div', {className: 'App-center'},
-        createElement('div', {className: 'List'},
+      React.createElement('div', {className: 'App-center'},
+        React.createElement('div', {className: 'List'},
           ...list.map(item =>
-            createElement('div', {className: 'List-item'},
-              createElement('div', {
+            React.createElement('div', {className: 'List-item'},
+              React.createElement('div', {
                   className: 'Item' + (item.selected ? ' Item_selected' : ''),
-                  onclick: () => store.selectItem(item.code)
+                  onClick: () => store.selectItem(item.code)
                 },
-                createElement('div', {className: 'Item-code', textContent: item.code}),
-                createElement('div', {className: 'Item-title', textContent: item.title}),
-                createElement('div', {className: 'Item-actions'},
-                  createElement('button', {
-                    textContent: 'Удалить',
-                    onclick: () => store.deleteItem(item.code)
-                  })
+                React.createElement('div', {className: 'Item-code'}, item.code),
+                React.createElement('div', {className: 'Item-title'}, item.title),
+                React.createElement('div', {className: 'Item-actions'},
+                  React.createElement('button', {onClick: () => store.deleteItem(item.code)},
+                    'Удалить'
+                  )
                 ),
               )
             )

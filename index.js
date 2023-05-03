@@ -1,6 +1,8 @@
-import {createElement} from "./utils.js";
-import App from "./app.js";
-import Store from "./store.js";
+import {createElement} from './utils.js';
+import App from './app.js';
+import Store from './store.js';
+import React from 'https://cdn.skypack.dev/react';
+import ReactDOM from 'https://cdn.skypack.dev/react-dom';
 
 const store = new Store({
   list: [
@@ -15,14 +17,8 @@ const store = new Store({
 });
 
 store.subscribe(() => {
-  // Удаляем содержимое body
-  while (document.body.lastElementChild) document.body.removeChild(document.body.lastElementChild);
-
-  // Добавляем в body новый рендер приложения
-  document.body.append(
-    App({store})
-  );
+  ReactDOM.render(React.createElement(App, {store}), document.body);
 });
 
 // Первый рендер приложения
-document.body.append(App({store}));
+ReactDOM.render(React.createElement(App, {store}), document.body);
