@@ -1,5 +1,6 @@
 import {createElement} from './utils.js';
-import React from 'https://cdn.skypack.dev/react';
+import React from 'react';
+import './styles.css';
 
 /**
  * Приложение

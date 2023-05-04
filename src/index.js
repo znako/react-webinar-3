@@ -1,8 +1,8 @@
 import {createElement} from './utils.js';
 import App from './app.js';
 import Store from './store.js';
-import React from 'https://cdn.skypack.dev/react';
-import ReactDOM from 'https://cdn.skypack.dev/react-dom';
+import React from 'react';
+import {createRoot} from 'react-dom/client';
 
 const store = new Store({
   list: [
@@ -16,9 +16,11 @@ const store = new Store({
   ]
 });
 
+const root = createRoot(document.getElementById('root'));
+
 store.subscribe(() => {
-  ReactDOM.render(React.createElement(App, {store}), document.body);
+  root.render(React.createElement(App, {store}));
 });
 
 // Первый рендер приложения
-ReactDOM.render(React.createElement(App, {store}), document.body);
+root.render(React.createElement(App, {store}));
