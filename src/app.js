@@ -1,5 +1,5 @@
-import {createElement} from './utils.js';
 import React from 'react';
+import {createElement} from './utils.js';
 import './styles.css';
 
 /**
@@ -12,34 +12,32 @@ function App({store}) {
   const list = store.getState().list;
 
   return (
-    React.createElement('div', {className: 'App'},
-      React.createElement('div', {className: 'App-head'},
-        React.createElement('h1', {}, 'Приложение на чистом JS')
-      ),
-      React.createElement('div', {className: 'App-controls'},
-        React.createElement('button', {onClick: () => store.addItem()}, 'Добавить'),
-      ),
-      React.createElement('div', {className: 'App-center'},
-        React.createElement('div', {className: 'List'},
-          ...list.map(item =>
-            React.createElement('div', {className: 'List-item'},
-              React.createElement('div', {
-                  className: 'Item' + (item.selected ? ' Item_selected' : ''),
-                  onClick: () => store.selectItem(item.code)
-                },
-                React.createElement('div', {className: 'Item-code'}, item.code),
-                React.createElement('div', {className: 'Item-title'}, item.title),
-                React.createElement('div', {className: 'Item-actions'},
-                  React.createElement('button', {onClick: () => store.deleteItem(item.code)},
-                    'Удалить'
-                  )
-                ),
-              )
-            )
-          )
-        )
-      )
-    )
+    <div className='App'>
+      <div className='App-head'>
+        <h1>Приложение на чистом JS</h1>
+      </div>
+      <div className='App-controls'>
+        <button onClick={() => store.addItem()}>Добавить</button>
+      </div>
+      <div className='App-center'>
+        <div className='List'>{
+          list.map(item =>
+            <div key={item.code} className='List-item'>
+              <div className={'Item' + (item.selected ? ' Item_selected' : '')}
+                   onClick={() => store.selectItem(item.code)}>
+                <div className='Item-code'>{item.code}</div>
+                <div className='Item-title'>{item.title}</div>
+                <div className='Item-actions'>
+                  <button onClick={() => store.deleteItem(item.code)}>
+                    Удалить
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -1,8 +1,8 @@
+import React from 'react';
+import {createRoot} from 'react-dom/client';
 import {createElement} from './utils.js';
 import App from './app.js';
 import Store from './store.js';
-import React from 'react';
-import {createRoot} from 'react-dom/client';
 
 const store = new Store({
   list: [
@@ -19,8 +19,8 @@ const store = new Store({
 const root = createRoot(document.getElementById('root'));
 
 store.subscribe(() => {
-  root.render(React.createElement(App, {store}));
+  root.render(<App store={store}/>);
 });
 
 // Первый рендер приложения
-root.render(React.createElement(App, {store}));
+root.render(<App store={store}/>);

@@ -18,6 +18,12 @@ let config = {
   },
   module: {
     rules: [
+      // Транспиляция JS/JSX
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [{loader: 'babel-loader'}],
+      },
       // Правила обработки подключаемых файлов
       {
         test: /\.css$/,
@@ -25,8 +31,7 @@ let config = {
           {loader: MiniCssExtractPlugin.loader, options: {}},
           {loader: 'css-loader', options: {url: true, import: true}},
         ]
-      }
-
+      },
     ]
   },
   plugins: [
