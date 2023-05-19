@@ -1,43 +1,73 @@
-import React from 'react';
-import {createElement} from './utils.js';
-import './styles.css';
+import React, { useCallback, useState } from "react";
+import List from "./components/list";
+import Controls from "./components/controls";
+import Head from "./components/head";
+import PageLayout from "./components/page-layout";
+import { plural } from "./utils";
+import Modal from "./components/modal";
 
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
  * @returns {React.ReactElement}
  */
-function App({store}) {
-
+function App({ store }) {
   const list = store.getState().list;
+  const cartList = store.getState().cart.cartList;
+  const cartCost = store.getState().cart.cartCost;
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const callbacks = {
+    onAddItemToCart: useCallback(
+      (code) => {
+        store.addItemToCart(code);
+      },
+      [store]
+    ),
+    onDeleteItemFromCart: useCallback(
+      (code) => {
+        store.deleteItemFromCart(code);
+      },
+      [store]
+    ),
+  };
 
   return (
-    <div className='App'>
-      <div className='App-head'>
-        <h1>Приложение на чистом JS</h1>
-      </div>
-      <div className='App-controls'>
-        <button onClick={() => store.addItem()}>Добавить</button>
-      </div>
-      <div className='App-center'>
-        <div className='List'>{
-          list.map(item =>
-            <div key={item.code} className='List-item'>
-              <div className={'Item' + (item.selected ? ' Item_selected' : '')}
-                   onClick={() => store.selectItem(item.code)}>
-                <div className='Item-code'>{item.code}</div>
-                <div className='Item-title'>{item.title}</div>
-                <div className='Item-actions'>
-                  <button onClick={() => store.deleteItem(item.code)}>
-                    Удалить
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    <PageLayout>
+      <Head title="Приложение на чистом JS" />
+      <Controls onClick={() => setModalVisible(true)}>
+        <p>
+          В корзине:{" "}
+          <strong>
+            {cartList.length !== 0
+              ? `${cartList.length} ${plural(cartList.length, {
+                  one: "товар",
+                  few: "товара",
+                  many: "товаров",
+                })} / ${new Intl.NumberFormat("ru-RU", {
+                  style: "currency",
+                  currency: "RUB",
+                  minimumFractionDigits: 0,
+                }).format(cartCost)}`
+              : "пусто"}
+          </strong>
+        </p>
+      </Controls>
+      <List
+        list={list}
+        onClick={callbacks.onAddItemToCart}
+        btnTitle="Добавить"
+      />
+      <Modal isVisible={modalVisible} setVisible={setModalVisible}>
+        <Head title="Корзина" />
+        <List
+          list={cartList}
+          btnTitle="Удалить"
+          onClick={callbacks.onDeleteItemFromCart}
+        />
+      </Modal>
+    </PageLayout>
   );
 }
 
