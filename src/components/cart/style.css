@@ -1,0 +1,31 @@
+.Modal__text {
+  font-family: "Arial";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.Cart-total {
+  padding: 20px;
+  margin-right: 50px;
+  font-family: "Arial";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: right;
+  color: #000000;
+}
+
+.Cart-margin-top {
+  margin-top: 67px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.Cart-total span {
+  margin-left: 45px;
+}
+
+.Cart-margin-bottom {
+  margin-bottom: 70px;
+}

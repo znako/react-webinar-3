@@ -5,18 +5,19 @@ import "./style.css";
 function Controls({ children, onClick }) {
   return (
     <div className="Controls">
-      {children}
+      <div className="Controls-items">{children}</div>
       <button onClick={() => onClick()}>Перейти</button>
     </div>
   );
 }
 
 Controls.propTypes = {
-  // onAdd: PropTypes.func,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
 };
 
 Controls.defaultProps = {
-  // onAdd: () => {},
+  onClick: () => {},
 };
 
 export default React.memo(Controls);

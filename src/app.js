@@ -3,8 +3,9 @@ import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
-import { plural } from "./utils";
+import { plural, priceFormat } from "./utils";
 import Modal from "./components/modal";
+import Cart from "./components/cart";
 
 /**
  * Приложение
@@ -35,36 +36,35 @@ function App({ store }) {
 
   return (
     <PageLayout>
-      <Head title="Приложение на чистом JS" />
+      <Head title="Магазин" />
       <Controls onClick={() => setModalVisible(true)}>
-        <p>
+        <>
           В корзине:{" "}
-          <strong>
+          <span className="Controls-quantity">
             {cartList.length !== 0
               ? `${cartList.length} ${plural(cartList.length, {
                   one: "товар",
                   few: "товара",
                   many: "товаров",
-                })} / ${new Intl.NumberFormat("ru-RU", {
-                  style: "currency",
-                  currency: "RUB",
-                  minimumFractionDigits: 0,
-                }).format(cartCost)}`
+                })} / ${priceFormat(cartCost)}`
               : "пусто"}
-          </strong>
-        </p>
+          </span>
+        </>
       </Controls>
       <List
         list={list}
         onClick={callbacks.onAddItemToCart}
         btnTitle="Добавить"
       />
-      <Modal isVisible={modalVisible} setVisible={setModalVisible}>
-        <Head title="Корзина" />
-        <List
-          list={cartList}
-          btnTitle="Удалить"
-          onClick={callbacks.onDeleteItemFromCart}
+      <Modal
+        isVisible={modalVisible}
+        setVisible={setModalVisible}
+        title="Корзина"
+      >
+        <Cart
+          cartList={cartList}
+          onDeleteItemFromCart={callbacks.onDeleteItemFromCart}
+          cartCost={cartCost}
         />
       </Modal>
     </PageLayout>

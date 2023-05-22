@@ -122,7 +122,6 @@ class Store {
         },
       });
     }
-    console.log(this.state);
   }
 
   /**
@@ -143,7 +142,6 @@ class Store {
         cartCost: this.state.cart.cartCost - item.count * item.price,
       },
     });
-    console.log(this.state);
   }
 }
 

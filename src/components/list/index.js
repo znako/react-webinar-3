@@ -22,6 +22,7 @@ List.propTypes = {
     })
   ).isRequired,
   onClick: PropTypes.func,
+  btnTitle: PropTypes.string,
 };
 
 List.defaultProps = {
